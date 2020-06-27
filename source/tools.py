@@ -1,7 +1,8 @@
 import pygame
 from moviepy.editor import *
 import source.setup
-from source.constants import SCR_X ,SCR_Y
+from source.constants import SCR_X ,SCR_Y,ST_SOUND
+
 
 # stage = 0  # 游戏阶段
 class Game:
@@ -10,10 +11,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.stage = 0
 
-    def run(self, state_0, state_1,player_1):
 
-        # self.play_video(videopath) # 播放视频
-        # bulletFlag = False
+    def run(self, state_0, state_1,player_1,en1):
         pygame.key.set_repeat(60)  # 响应一直按下的键
         keep_going = True
         while keep_going:
@@ -30,9 +29,15 @@ class Game:
                     if self.stage == 1:  # 阶段 1
                         if event.key == pygame.K_a:
                             player_1.change_p1()
+                            player_1.pl_uodate_l()
+                            en1.en1_uodate_r()
+
                             state_1.map_update_r()
                         if event.key == pygame.K_d:
                             player_1.change_p1()
+                            player_1.pl_uodate_r()
+                            en1.en1_uodate_l()
+
                             state_1.map_update_l()
                         if event.key == pygame.K_w:
                             player_1.change_p1()
@@ -50,6 +55,7 @@ class Game:
                     if self.stage == 0:  # 阶段0
                         if (mouse_x >= SCR_X // 2 - 554 // 2 and mouse_x <= SCR_X // 2 + 554 // 2) and \
                                 (mouse_y >= SCR_Y // 2 and mouse_y <= SCR_Y // 2 + 94):  # 判断鼠标是否在开始按钮之上
+
                             self.stage = 1
 
             if self.stage == 0:  # 阶段 0 主菜单
@@ -58,8 +64,13 @@ class Game:
             elif self.stage == 1 :  # 阶段 1 第一关
                 state_1.map_loade(self.screen)  # 加载地图
                 state_1.map_check() # 检测地图
-                player_1.player_load(self.screen)
+
+                player_1.player_load(self.screen) # 加载玩家
                 player_1.pl_check()
+
+                en1.enemy_load(self.screen)  # 绘制敌人
+                en1.change_en1()
+
                 player_1.bullets.update()  # 绘制子弹
                 player_1.bullets.draw(self.screen)  # 绘制精灵组
 

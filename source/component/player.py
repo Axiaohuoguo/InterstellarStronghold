@@ -22,16 +22,22 @@ class PlayerCO(Sprite):
         self.bullets = pygame.sprite.Group()  # bullets属性：子弹组，使用精灵组
 
     def player_load(self, Surface):
-        # 加载地图图片
+        # 加载玩家图图片
         palayer1_img = get_image(self.palayer1_img,0,0,self.p1_rect_x,self.p1_rect_y,CO.COLOR_LU,1)
         # self.lv_x = self.lv_x+30
         Surface.blit(palayer1_img,(self.speed_x,self.speed_y),self.p1_rect) # 图像，绘制的位置，绘制的截面框
 
     def pl_uodate_u(self):  # 角色上移
-        self.speed_y = self.speed_y - 40
+        self.speed_y = self.speed_y - 20
 
     def pl_uodate_d(self):  # 角色下移
-        self.speed_y = self.speed_y + 40
+        self.speed_y = self.speed_y + 20
+
+    def pl_uodate_r(self):  # 角色右移动
+        self.speed_x = self.speed_x + 0
+
+    def pl_uodate_l(self):  # 角色左移
+        self.speed_x = self.speed_x - 0
 
 
     def pl_check(self):  # 检测是否超出屏幕

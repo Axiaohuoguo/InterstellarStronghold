@@ -1,4 +1,5 @@
 import pygame
+import time
 from source import tools
 from source import constants as CO
 
@@ -12,6 +13,7 @@ class MainMenu:
         self.st_rect = self.start_01_img.get_rect()
         self.st_rect_x = 0
         self.st_rect_y = 0
+        self.sound = pygame.mixer.Sound(CO.ST_SOUND)  # 音效
 
     def update(self,surface,pos):
         '''
@@ -32,10 +34,15 @@ class MainMenu:
         # (CO.SCR_Y//2 + 94//2  <= mouse_x <= (CO.SCR_Y//2 + 800))
         if (mouse_x >= CO.SCR_X //2 - 554//2 and mouse_x <= CO.SCR_X//2 +554//2 ) and\
                 (mouse_y >= CO.SCR_Y//2 and mouse_y<= CO.SCR_Y //2 + 94):  # 判断鼠标是否在开始按钮之上
+
             stimg = pygame.image.load(CO.STPATH1)
             stimg = tools.get_image(stimg, 0, 0, stimg.get_rect()[2], stimg.get_rect()[3], CO.COLOR_LU, 1) #
             surface.blit(stimg, (CO.SCR_X//2-554//2, CO.SCR_Y//2), stimg.get_rect())
+            if self.sound != '0':
+                self.sound.play()
+            self.sound = '0'
         else:
+            self.sound = pygame.mixer.Sound(CO.ST_SOUND)
             stimg = pygame.image.load(CO.STPATH2)
             stimg = tools.get_image(stimg, 0, 0, stimg.get_rect()[2], stimg.get_rect()[3], CO.COLOR_LU, 1)
             print("st -", stimg.get_rect())

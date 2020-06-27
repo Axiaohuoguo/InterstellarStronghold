@@ -14,9 +14,16 @@ PLAYER_0_5 = 'res/picture/palyer/palyer_05.png'  # 角色1_5
 
 BULLET_01 = 'res/picture/Bullet_01.png'  # 子弹
 
+ST_SOUND = 'res/sound/st_sound.wav'  # 开始按钮
+
+EN1_01_IMGPATH = 'res/picture/Enemy/enemy1_01.png'  # 怪物1图片
+EN1_02_IMGPATH = 'res/picture/Enemy/enemy1_02.png'  # 怪物1图片
+EN1_03_IMGPATH = 'res/picture/Enemy/enemy1_03.png'  # 怪物1图片
+EN1_04_IMGPATH = 'res/picture/Enemy/enemy1_04.png'  # 怪物1图片
 
 COLOR_LU = (0, 0, 0)  # 黑/透明
 COLOR_WI = (255,255,255)  # 白色
+
 ST_W = 200  # 开始按钮宽
 ST_H = 100  # 开始按钮高
 
