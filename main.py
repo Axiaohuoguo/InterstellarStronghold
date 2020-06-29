@@ -11,7 +11,7 @@ def main():
     p1 = player.PlayerCO()
     en1 = enemy.Enemy()
 
-    tools.play_video(ST_VIDEOPATH,SRC_SIZE)
+    # tools.play_video(ST_VIDEOPATH,SRC_SIZE)
     game.run(states_0,states_1,p1,en1)
 
 

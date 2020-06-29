@@ -1,5 +1,6 @@
-## 文件夹
 
+## 游戏基本框架
+## 文件夹
 == res 资源文件夹
     |--
     music -
@@ -23,12 +24,13 @@
          player -角色信息
     |-- states - 游戏各阶段状态
         | + main_menu.py - 游戏主菜单
-        | + lode_screen.py - 关卡载入、屏幕
         | + level.py - 关卡
     | + constants.py - 常量
-    | + sound.py - 声音
     | + setup.py - 启动时代码
     | + tools.py - 主控工具 图片加载。。。
 |+ main.py - 启动程序
 ## py文件
 -- main.py -程序入口
+
+
+

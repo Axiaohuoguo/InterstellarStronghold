@@ -21,6 +21,8 @@ EN1_02_IMGPATH = 'res/picture/Enemy/enemy1_02.png'  # 怪物1图片
 EN1_03_IMGPATH = 'res/picture/Enemy/enemy1_03.png'  # 怪物1图片
 EN1_04_IMGPATH = 'res/picture/Enemy/enemy1_04.png'  # 怪物1图片
 
+
+
 COLOR_LU = (0, 0, 0)  # 黑/透明
 COLOR_WI = (255,255,255)  # 白色
 

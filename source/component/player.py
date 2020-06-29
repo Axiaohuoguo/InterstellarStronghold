@@ -15,7 +15,7 @@ class PlayerCO(Sprite):
         self.p1_rect_x = self.p1_rect[2]
         self.p1_rect_y = self.p1_rect[3]
 
-        self.speed_x = CO.SCR_X // 2 - 200  # 初始x移动速度
+        self.speed_x = CO.SCR_X // 2 - 300  # 初始x移动速度
         self.speed_y = CO.SCR_Y//2  # 初始y移动速度
 
         self.change = 0  # 角色动画控制
