@@ -10,7 +10,7 @@ class MapCon:
         self.lv0_rect = self.lv0_backgroundimg.get_rect()  # lv0 地图rect
         self.lv0_rect_x = self.lv0_rect[2] # 图片w
         self.lv0_rect_y = self.lv0_rect[3] # 图片h
-        self.lv_x_speed = -100 # 地图初始位置
+        self.lv_x_speed = -40 # 地图初始位置
         self.lv_y_speed = 0
         self.map_check()
 
@@ -36,10 +36,10 @@ class MapCon:
 
     def map_update_r(self): # 右
 
-        self.lv_x_speed = self.lv_x_speed - 40
+        self.lv_x_speed = self.lv_x_speed - 20
 
     def map_update_l(self): # 左
-        self.lv_x_speed = self.lv_x_speed + 40
+        self.lv_x_speed = self.lv_x_speed + 20
 
     def map_check(self): # 检测地图是否越界
         if self.lv_x_speed < 0:

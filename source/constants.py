@@ -21,7 +21,9 @@ EN1_02_IMGPATH = 'res/picture/Enemy/enemy1_02.png'  # 怪物1图片
 EN1_03_IMGPATH = 'res/picture/Enemy/enemy1_03.png'  # 怪物1图片
 EN1_04_IMGPATH = 'res/picture/Enemy/enemy1_04.png'  # 怪物1图片
 
+EN1_JSONPATH = 'source/data/maps/level_01.json'  # 怪物
 
+EN1_TXTPATH = 'source/data/maps/level_01'  # 怪物
 
 COLOR_LU = (0, 0, 0)  # 黑/透明
 COLOR_WI = (255,255,255)  # 白色

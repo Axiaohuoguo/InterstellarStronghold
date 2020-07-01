@@ -20,6 +20,7 @@ class PlayerCO(Sprite):
 
         self.change = 0  # 角色动画控制
         self.bullets = pygame.sprite.Group()  # bullets属性：子弹组，使用精灵组
+        self.clock = pygame.time.Clock()
 
     def player_load(self, Surface):
         # 加载玩家图图片
@@ -39,14 +40,12 @@ class PlayerCO(Sprite):
     def pl_uodate_l(self):  # 角色左移
         self.speed_x = self.speed_x - 0
 
-
     def pl_check(self):  # 检测是否超出屏幕
 
         if self.speed_y <= 0:
             self.speed_y = 0
         elif self.speed_y >= CO.SCR_Y - 100:
             self.speed_y = CO.SCR_Y - 100
-
 
     def change_p1(self):  # 控制角色动画
         if self.change == 0 :
@@ -60,6 +59,7 @@ class PlayerCO(Sprite):
         elif self.change == 2:
             self.palayer1_img = pygame.image.load(CO.PLAYER_0_3)
             self.change = 0
+
     def get_p1_y(self):
         return self.speed_y
 
@@ -69,6 +69,7 @@ class PlayerCO(Sprite):
         bullet = Bullet(self.bullet_img, (self.speed_x,self.speed_y))
         # 将子弹添加到子弹组中
         self.bullets.add(bullet)
+
 
 # 子弹
 class Bullet(pygame.sprite.Sprite):
@@ -80,7 +81,7 @@ class Bullet(pygame.sprite.Sprite):
         self.image = bullet_surface  # image属性：子弹图片
         self.rect = self.image.get_rect()  # rect属性：矩形
         self.rect.topleft = bullet_init_pos  # 矩形左上角坐标
-        self.speed = 8  # speed属性：子弹移动速度
+        self.speed = 80  # speed属性：子弹移动速度
 
     # 移动方法
     def update(self):
