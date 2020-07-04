@@ -21,6 +21,12 @@ EN1_02_IMGPATH = 'res/picture/Enemy/enemy1_02.png'  # 怪物1图片
 EN1_03_IMGPATH = 'res/picture/Enemy/enemy1_03.png'  # 怪物1图片
 EN1_04_IMGPATH = 'res/picture/Enemy/enemy1_04.png'  # 怪物1图片
 
+# BOOM_01 = 'res/picture/Enemy/boom01.png'  # 爆炸效果
+# BOOM_02 = 'res/picture/Enemy/boom02.png'  # 怪物1图片
+# BOOM_03 = 'res/picture/Enemy/boom03.png'  # 怪物1图片
+
+EN1_BOOM_PATH = 'res/picture/Enemy/en_boom'
+
 EN1_JSONPATH = 'source/data/maps/level_01.json'  # 怪物
 
 EN1_TXTPATH = 'source/data/maps/level_01'  # 怪物

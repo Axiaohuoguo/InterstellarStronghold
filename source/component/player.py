@@ -6,14 +6,18 @@ Sprite = pygame.sprite.Sprite
 
 
 class PlayerCO(Sprite):
-    def __init__(self):
-        Sprite.__init__(self)
-        self.palayer1_img = pygame.image.load(CO.PLAYER_0_1) # 角色图片
-        self.bullet_img = pygame.image.load(CO.BULLET_01) # 子弹图片
 
-        self.p1_rect = self.palayer1_img.get_rect()
-        self.p1_rect_x = self.p1_rect[2]
-        self.p1_rect_y = self.p1_rect[3]
+    def __init__(self,pltype):
+
+        Sprite.__init__(self)
+        if pltype == '1':
+            self.image = pygame.image.load(CO.PLAYER_0_1)  # 角色图片
+            self.health = 100
+        self.bullet_img = pygame.image.load(CO.BULLET_01)  # 子弹图片
+
+        self.rect = self.image.get_rect()
+        self.p1_rect_x = self.rect[2]
+        self.p1_rect_y = self.rect[3]
 
         self.speed_x = CO.SCR_X // 2 - 300  # 初始x移动速度
         self.speed_y = CO.SCR_Y//2  # 初始y移动速度
@@ -24,9 +28,9 @@ class PlayerCO(Sprite):
 
     def player_load(self, Surface):
         # 加载玩家图图片
-        palayer1_img = get_image(self.palayer1_img,0,0,self.p1_rect_x,self.p1_rect_y,CO.COLOR_LU,1)
+        palayer1_img = get_image(self.image,0,0,self.p1_rect_x,self.p1_rect_y,CO.COLOR_LU,1)
         # self.lv_x = self.lv_x+30
-        Surface.blit(palayer1_img,(self.speed_x,self.speed_y),self.p1_rect) # 图像，绘制的位置，绘制的截面框
+        Surface.blit(palayer1_img,(self.speed_x,self.speed_y),self.rect) # 图像，绘制的位置，绘制的截面框
 
     def pl_uodate_u(self):  # 角色上移
         self.speed_y = self.speed_y - 20
@@ -49,23 +53,33 @@ class PlayerCO(Sprite):
 
     def change_p1(self):  # 控制角色动画
         if self.change == 0 :
-            self.palayer1_img = pygame.image.load(CO.PLAYER_0_1)
+            self.image = pygame.image.load(CO.PLAYER_0_1)
             self.change = 1
 
         elif self.change == 1:
-            self.palayer1_img = pygame.image.load(CO.PLAYER_0_2)
+            self.image = pygame.image.load(CO.PLAYER_0_2)
             self.change = 2
 
         elif self.change == 2:
-            self.palayer1_img = pygame.image.load(CO.PLAYER_0_3)
+            self.image = pygame.image.load(CO.PLAYER_0_3)
+            self.change = 3
+
+        elif self.change == 3:
+            self.image = pygame.image.load(CO.PLAYER_0_4)
+            self.change = 4
+
+        elif self.change == 4:
+            self.image = pygame.image.load(CO.PLAYER_0_5)
             self.change = 0
+
+
 
     def get_p1_y(self):
         return self.speed_y
 
     # 发射子弹方法
     def shoot(self):
-        print(self.p1_rect)
+        print(self.rect)
         bullet = Bullet(self.bullet_img, (self.speed_x,self.speed_y))
         # 将子弹添加到子弹组中
         self.bullets.add(bullet)

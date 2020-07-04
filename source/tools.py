@@ -11,11 +11,12 @@ class Game:
         self.clock = pygame.time.Clock()
         self.stage = 0
         self.enemy1_img = pygame.image.load(EN1_01_IMGPATH)
-        self.en_change = 0
+        self.tim = 0
 
-    def run(self, state_0, state_1,player_1,en1s):
+    def run(self, state_0, state_1, player_1, en1s, en_boom):
         pygame.key.set_repeat(60)  # 响应一直按下的键
         keep_going = True
+
         while keep_going:
             pos = pygame.mouse.get_pos()
             mouse_x = pos[0]
@@ -35,6 +36,8 @@ class Game:
                     player_1.pl_uodate_l()
                     for en in en1s:
                         en.move_l()
+                    if en_boom.visible:
+                        en_boom.en_boom_l()
 
                     state_1.map_update_r()
                 if KEY_D:
@@ -42,6 +45,8 @@ class Game:
                     player_1.pl_uodate_r()
                     for en in en1s:
                         en.move_r()
+                    if en_boom.visible:
+                        en_boom.en_boom_r()
 
                     state_1.map_update_l()
                 if KEY_W:
@@ -77,12 +82,45 @@ class Game:
                 player_1.player_load(self.screen)  # 加载玩家
                 player_1.pl_check()
 
-                for en in en1s:  # 绘制敌人
-                    self.screen.blit(en.enemy1_img,en.en1_rect)
-                    en.change_en1()
-
                 player_1.bullets.update()  # 绘制子弹
                 player_1.bullets.draw(self.screen)  # 绘制精灵组
+
+                for en in en1s:  # 绘制敌人
+                    self.screen.blit(en.image, en.rect)
+                    en.change_en1()
+
+                # en_boom.set_pos(en.get_en_pos())
+
+                en_boom.draw(self.screen)
+                en_boom.action()
+
+                # 子弹和敌人碰撞
+                self.tim += 1
+                for en in en1s:
+                    for bu in player_1.bullets:
+                        if pygame.sprite.collide_mask(en, bu):
+                            en.health -= 10  # 子弹伤害为10
+                            bu.kill()
+                            if en.health <= 0:
+                                en_boom.set_pos(en.get_en_pos())
+                                en_boom.visible = True
+                                en.kill()
+
+
+
+
+                    # en1gs.add(en)
+                    # if pygame.sprite.collide_mask(player_1,en):
+                    #     print('----')
+
+                # if pygame.sprite.collide_mask(player_1, en):
+                #     print("-------")
+                # print("en",en.en1_rect)
+                # for bu in player_1.bullets:
+                #     print(bu)
+                    # for bu in player_1.bullets:
+                    #     if pygame.sprite.collide_circle(bu,en.en1_rectdw):
+                    #         print("-------------")
 
             pygame.display.update()
             self.clock.tick(60)  # 60帧
