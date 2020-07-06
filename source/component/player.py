@@ -13,6 +13,8 @@ class PlayerCO(Sprite):
         if pltype == '1':
             self.image = pygame.image.load(CO.PLAYER_0_1)  # 角色图片
             self.health = 100
+            self.health_img = pygame.image.load(CO.HEALTH_p1_01) #血量
+            self.health_img_rect = self.health_img.get_rect()
         self.bullet_img = pygame.image.load(CO.BULLET_01)  # 子弹图片
 
         self.rect = self.image.get_rect()
@@ -28,9 +30,15 @@ class PlayerCO(Sprite):
 
     def player_load(self, Surface):
         # 加载玩家图图片
-        palayer1_img = get_image(self.image,0,0,self.p1_rect_x,self.p1_rect_y,CO.COLOR_LU,1)
+        # palayer1_img = get_image(self.image,0,0,self.p1_rect_x,self.p1_rect_y,CO.COLOR_LU,1)
         # self.lv_x = self.lv_x+30
-        Surface.blit(palayer1_img,(self.speed_x,self.speed_y),self.rect) # 图像，绘制的位置，绘制的截面框
+        Surface.blit(self.image,(self.speed_x,self.speed_y),self.rect) # 图像，绘制的位置，绘制的截面框
+
+    #绘制玩家血量
+    def draw_p1_health(self,Surface):
+        # 加载玩家血量图图片
+        Surface.blit(self.health_img, (0, 0), self.health_img_rect)  # 图像，绘制的位置，绘制的截面框
+        pass
 
     def pl_uodate_u(self):  # 角色上移
         self.speed_y = self.speed_y - 20
@@ -45,7 +53,6 @@ class PlayerCO(Sprite):
         self.speed_x = self.speed_x - 0
 
     def pl_check(self):  # 检测是否超出屏幕
-
         if self.speed_y <= 0:
             self.speed_y = 0
         elif self.speed_y >= CO.SCR_Y - 100:
@@ -71,8 +78,6 @@ class PlayerCO(Sprite):
         elif self.change == 4:
             self.image = pygame.image.load(CO.PLAYER_0_5)
             self.change = 0
-
-
 
     def get_p1_y(self):
         return self.speed_y

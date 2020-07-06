@@ -2,7 +2,7 @@
 from source import constants as CO
 from source.tools import get_image
 import pygame
-
+import random
 Sprite = pygame.sprite.Sprite
 
 
@@ -10,13 +10,21 @@ class Enemys(Sprite):
 
     def __init__(self, en1_pos_x,en1_pos_y,en_type):
         Sprite.__init__(self)
+        self.en_type = en_type
+        self.en1_pos_x = en1_pos_x
+        self.en1_pos_y = en1_pos_y
         if en_type == '1':
             self.image = pygame.image.load(CO.EN1_01_IMGPATH)
             self.health = 20
+            self.bullet_img = CO.EN_BULLET_01
+            self.en_bullets = pygame.sprite.Group()
+            self.en_bullet_img = pygame.image.load(CO.EN_BULLET_01)
+
         self.rect = self.image.get_rect()
         self.change = 0
         self.boom_change = 0
-        self.rect.topleft = (en1_pos_x,en1_pos_y)  # 矩形左上角坐标
+        self.rect.top = en1_pos_y  # 矩形左上角坐标
+        self.rect.left = en1_pos_x  # 矩形左上角坐标
         self.speed = 20
         self.temp = 0
 
@@ -43,9 +51,49 @@ class Enemys(Sprite):
             self.image = pygame.image.load(CO.EN1_04_IMGPATH)
             self.change = 0
 
-    def get_en_pos(self):
+    def get_en_pos(self):  # 获得怪物的位置
         pos = self.rect.topleft
         return pos
+
+    # 发射子弹方法
+    def en_shoot(self):
+        self.temp += 1
+        if self.temp % 30 == 0:
+            print(self.rect)
+            bullet = Bullet(self.en_bullet_img, (self.rect.top,self.rect.left))
+            # 将子弹添加到子弹组中
+            self.en_bullets.add(bullet)
+
+
+# 子弹
+class Bullet(Sprite):
+    # 构造方法，参数分别是子弹图片和起始位置
+    def __init__(self, bullet_surface, bullet_init_pos):
+        # 调用父类的构造方法
+        Sprite.__init__(self)
+        # 设置属性
+        self.image = bullet_surface  # image属性：子弹图片
+        self.rect = self.image.get_rect()  # rect属性：矩形
+        self.rect.top = bullet_init_pos[0]  # 矩形左上角坐标
+        self.rect.left = bullet_init_pos[1]  # 矩形左上角坐标
+        self.speed = random.randint(-20,20) # speed属性：子弹移动速度
+        self.speed1 = random.randint(-10,10) # speed属性：子弹移动速度
+        self.temp = 0
+
+    def en_bu_r(self):
+        self.rect.left -= 20
+
+    def en_bu_l(self):
+        self.rect.left += 20
+
+    # 子彈移动方法
+    def update(self):
+        self.rect.top += self.speed
+        self.rect.left += self.speed1
+        if self.rect.top <= 0 or self.rect.top >= CO.SCR_Y-200:
+            self.kill()
+        if self.rect.left <=100 or self.rect.left >= CO.SCR_X -200:
+            self.kill()
 
 
 class Bomb(Sprite):
@@ -58,7 +106,7 @@ class Bomb(Sprite):
         # 设置当前爆炸播放索引
         self.index = 0
         # 图片爆炸播放间隔
-        self.interval = 10
+        self.interval = 5
         self.interval_index = 0
         # 爆炸位置
         self.position = [0, 0]

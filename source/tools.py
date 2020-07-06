@@ -34,10 +34,13 @@ class Game:
                 if KEY_A:
                     player_1.change_p1()
                     player_1.pl_uodate_l()
-                    for en in en1s:
-                        en.move_l()
-                    if en_boom.visible:
-                        en_boom.en_boom_l()
+                    if not state_1.get_lv_x() <=0:
+                        for en in en1s:
+                            en.move_l()
+                            for en_bu in en.en_bullets:
+                                en_bu.en_bu_l()
+                        if en_boom.visible:
+                            en_boom.en_boom_l()
 
                     state_1.map_update_r()
                 if KEY_D:
@@ -45,6 +48,8 @@ class Game:
                     player_1.pl_uodate_r()
                     for en in en1s:
                         en.move_r()
+                        for en_bu in en.en_bullets:
+                            en_bu.en_bu_r()
                     if en_boom.visible:
                         en_boom.en_boom_r()
 
@@ -62,11 +67,8 @@ class Game:
             for event in pygame.event.get():  # 获取事件列表
                 if event.type == pygame.QUIT:  # 退出事件
                     keep_going = False
-                # if event.type == pygame.KEYDOWN:
-                #     self.keys = pygame.key.get_pressed()
-                # if event.type == pygame.KEYUP:
-                #     self.keys = pygame.key.get_pressed()
-                if event.type == pygame.MOUSEBUTTONDOWN: # 鼠标点击
+
+                if event.type == pygame.MOUSEBUTTONDOWN:  # 鼠标点击
                     if self.stage == 0:  # 阶段0
                         if (mouse_x >= SCR_X // 2 - 554 // 2 and mouse_x <= SCR_X // 2 + 554 // 2) and \
                                 (mouse_y >= SCR_Y // 2 and mouse_y <= SCR_Y // 2 + 94):  # 判断鼠标是否在开始按钮之上
@@ -81,19 +83,25 @@ class Game:
 
                 player_1.player_load(self.screen)  # 加载玩家
                 player_1.pl_check()
+                player_1.draw_p1_health(self.screen)  # 玩家血条
 
                 player_1.bullets.update()  # 绘制子弹
-                player_1.bullets.draw(self.screen)  # 绘制精灵组
+                player_1.bullets.draw(self.screen)  # 绘制角色子彈精灵组
 
                 for en in en1s:  # 绘制敌人
                     self.screen.blit(en.image, en.rect)
                     en.change_en1()
+                    en.en_bullets.update()  # 绘制子弹
 
-                # en_boom.set_pos(en.get_en_pos())
+                    en.en_shoot()
+                    en.en_bullets.draw(self.screen)  # 绘制怪物子彈精灵组
+
 
                 en_boom.draw(self.screen)
                 en_boom.action()
 
+                # pplist = pygame.sprite.spritecollide(player_1,en1s,True)
+                # print(pplist)
                 # 子弹和敌人碰撞
                 self.tim += 1
                 for en in en1s:
@@ -106,26 +114,11 @@ class Game:
                                 en_boom.visible = True
                                 en.kill()
 
-
-
-
-                    # en1gs.add(en)
-                    # if pygame.sprite.collide_mask(player_1,en):
-                    #     print('----')
-
-                # if pygame.sprite.collide_mask(player_1, en):
-                #     print("-------")
-                # print("en",en.en1_rect)
-                # for bu in player_1.bullets:
-                #     print(bu)
-                    # for bu in player_1.bullets:
-                    #     if pygame.sprite.collide_circle(bu,en.en1_rectdw):
-                    #         print("-------------")
-
             pygame.display.update()
             self.clock.tick(60)  # 60帧
         pygame.quit()
 
+        
 def get_image(img, x, y, width, height, cloorkey, scale):
     '''
     :param img: 图片

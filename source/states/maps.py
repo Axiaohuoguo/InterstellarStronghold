@@ -47,7 +47,7 @@ class MapCon:
         elif self.lv_x_speed >= 1920*4:
             self.lv_x_speed = 1920*4
 
-    def get_lv_x_speed(self):
+    def get_lv_x(self):
         return self.lv_x_speed
 
 
