@@ -13,7 +13,7 @@ class Game:
         self.enemy1_img = pygame.image.load(EN1_01_IMGPATH)
         self.tim = 0
 
-    def run(self, state_0, state_1, player_1, en1s, en_boom):
+    def run(self, state_0, state_1, player_1, en1s,en2s, en_boom):
         pygame.key.set_repeat(60)  # 响应一直按下的键
         keep_going = True
 
@@ -32,6 +32,7 @@ class Game:
                 keep_going = False
             if self.stage == 1:  # 阶段 1
                 if KEY_A:
+                    # for pl in player_1:
                     player_1.change_p1()
                     player_1.pl_uodate_l()
                     if not state_1.get_lv_x() <=0:
@@ -39,29 +40,43 @@ class Game:
                             en.move_l()
                             for en_bu in en.en_bullets:
                                 en_bu.en_bu_l()
+                        for en in en2s:
+                            en.move_l()
+                            for en_bu in en.en_bullets:
+                                en_bu.en_bu_l()
+
                         if en_boom.visible:
                             en_boom.en_boom_l()
 
                     state_1.map_update_r()
                 if KEY_D:
+                    # for pl in player_1:
                     player_1.change_p1()
                     player_1.pl_uodate_r()
                     for en in en1s:
                         en.move_r()
                         for en_bu in en.en_bullets:
                             en_bu.en_bu_r()
+                    for en in en2s:
+                        en.move_r()
+                        for en_bu in en.en_bullets:
+                            en_bu.en_bu_r()
+
                     if en_boom.visible:
                         en_boom.en_boom_r()
 
                     state_1.map_update_l()
                 if KEY_W:
+                    # for pl in player_1:
                     player_1.change_p1()
                     player_1.pl_uodate_u()
 
                 if KEY_S:
+                    # for pl in player_1:
                     player_1.change_p1()
                     player_1.pl_uodate_d()
                 if KEY_SPACE:
+                    # for pl in player_1:
                     player_1.shoot()  # 发射子弹
 
             for event in pygame.event.get():  # 获取事件列表
@@ -70,8 +85,8 @@ class Game:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:  # 鼠标点击
                     if self.stage == 0:  # 阶段0
-                        if (mouse_x >= SCR_X // 2 - 554 // 2 and mouse_x <= SCR_X // 2 + 554 // 2) and \
-                                (mouse_y >= SCR_Y // 2 and mouse_y <= SCR_Y // 2 + 94):  # 判断鼠标是否在开始按钮之上
+                        if (SCR_X // 2 - 554 // 2 <= mouse_x <= SCR_X // 2 + 554 // 2) and \
+                                (SCR_Y // 2 <= mouse_y <= SCR_Y // 2 + 94):  # 判断鼠标是否在开始按钮之上
                             self.stage = 1
 
             if self.stage == 0:  # 阶段 0 主菜单
@@ -80,15 +95,16 @@ class Game:
             if self.stage == 1:  # 阶段 1 第一关
                 state_1.map_loade(self.screen)  # 加载地图
                 state_1.map_check()  # 检测地图
-
+                # for pl in player_1:
                 player_1.player_load(self.screen)  # 加载玩家
                 player_1.pl_check()
                 player_1.draw_p1_health(self.screen)  # 玩家血条
+                player_1.draw_score(self.screen)
 
                 player_1.bullets.update()  # 绘制子弹
                 player_1.bullets.draw(self.screen)  # 绘制角色子彈精灵组
 
-                for en in en1s:  # 绘制敌人
+                for en in en1s:  # 绘制敌人1
                     self.screen.blit(en.image, en.rect)
                     en.change_en1()
                     en.en_bullets.update()  # 绘制子弹
@@ -96,15 +112,29 @@ class Game:
                     en.en_shoot()
                     en.en_bullets.draw(self.screen)  # 绘制怪物子彈精灵组
 
+                for en in en2s:  # 绘制敌人2
+                    self.screen.blit(en.image, en.rect)
+                    en.change_en2()
+                    en.en_bullets.update()  # 绘制子弹
+                    en.en_shoot()
+                    en.en_bullets.draw(self.screen)  # 绘制怪物子彈精灵组
 
                 en_boom.draw(self.screen)
                 en_boom.action()
-
-                # pplist = pygame.sprite.spritecollide(player_1,en1s,True)
-                # print(pplist)
-                # 子弹和敌人碰撞
+                en1s.update()
+                en2s.update()
+                player_1.update()
+                print("血量 ===",player_1.health)
+                # 玩家子弹和敌人1碰撞
                 self.tim += 1
                 for en in en1s:
+                    collide_list = pygame.sprite.spritecollide(player_1, en.en_bullets,True)
+                    player_1.health -= (len(collide_list)*5)
+                    if pygame.sprite.collide_rect(player_1,en): # 玩家和敌人碰撞
+                        en.kill()
+                        en_boom.set_pos(en.get_en_pos())
+                        en_boom.visible = True
+                        player_1.health -= 10
                     for bu in player_1.bullets:
                         if pygame.sprite.collide_mask(en, bu):
                             en.health -= 10  # 子弹伤害为10
@@ -113,7 +143,28 @@ class Game:
                                 en_boom.set_pos(en.get_en_pos())
                                 en_boom.visible = True
                                 en.kill()
+                                player_1.score1 += 10
+                # 玩家子弹和敌人2碰撞
+                for en in en2s:
+                    collide_list = pygame.sprite.spritecollide(player_1, en.en_bullets,True)
+                    player_1.health -= (len(collide_list)*5)
+                    if pygame.sprite.collide_rect(player_1,en): # 玩家和敌人碰撞
+                        en.kill()
+                        en_boom.set_pos(en.get_en_pos())
+                        en_boom.visible = True
+                        player_1.health -= 10
 
+                    for bu in player_1.bullets:
+                        if pygame.sprite.collide_mask(en, bu):
+                            en.health -= 10  # 子弹伤害为10
+                            bu.kill()
+                            if en.health <= 0:
+                                en_boom.set_pos(en.get_en_pos())
+                                en_boom.visible = True
+                                en.kill()
+                                player_1.score1 += 10
+            if self.stage == 99:  # 阶段 99 游戏结束
+                pass
             pygame.display.update()
             self.clock.tick(60)  # 60帧
         pygame.quit()
@@ -139,6 +190,11 @@ def get_image(img, x, y, width, height, cloorkey, scale):
 
 
 def play_video(path,size):
+    '''
+    :param path:  路径
+    :param size:  w，h大小
+    :return:
+    '''
     clip = VideoFileClip(path,)
     clip.reader.size=size
     clip.preview()

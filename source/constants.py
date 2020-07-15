@@ -24,6 +24,14 @@ EN1_01_IMGPATH = 'res/picture/Enemy/enemy1_01.png'  # 怪物1图片
 EN1_02_IMGPATH = 'res/picture/Enemy/enemy1_02.png'  # 怪物1图片
 EN1_03_IMGPATH = 'res/picture/Enemy/enemy1_03.png'  # 怪物1图片
 EN1_04_IMGPATH = 'res/picture/Enemy/enemy1_04.png'  # 怪物1图片
+EN1_05_IMGPATH = 'res/picture/Enemy/enemy1_05.png'  # 怪物1图片
+EN1_06_IMGPATH = 'res/picture/Enemy/enemy1_06.png'  # 怪物1图片
+EN1_07_IMGPATH = 'res/picture/Enemy/enemy1_07.png'  # 怪物1图片
+
+EN2_01_IMGPATH = 'res/picture/Enemy/enemy2_01.png'  # 怪物1图片
+EN2_02_IMGPATH = 'res/picture/Enemy/enemy2_02.png'  # 怪物1图片
+EN2_03_IMGPATH = 'res/picture/Enemy/enemy2_03.png'  # 怪物1图片
+EN2_04_IMGPATH = 'res/picture/Enemy/enemy2_04.png'  # 怪物1图片
 
 # BOOM_01 = 'res/picture/Enemy/boom01.png'  # 爆炸效果
 # BOOM_02 = 'res/picture/Enemy/boom02.png'  # 怪物1图片
@@ -34,6 +42,8 @@ EN1_BOOM_PATH = 'res/picture/Enemy/en_boom'
 EN1_JSONPATH = 'source/data/maps/level_01.json'  # 怪物
 
 EN1_TXTPATH = 'source/data/maps/level_01'  # 怪物
+FONT_COL = (255,0,255) # 分数字体颜色
+FONT_S = 'res/font/myfont.ttf' # 字体
 
 COLOR_LU = (0, 0, 0)  # 黑/透明
 COLOR_WI = (255,255,255)  # 白色

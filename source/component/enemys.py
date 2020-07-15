@@ -20,6 +20,13 @@ class Enemys(Sprite):
             self.en_bullets = pygame.sprite.Group()
             self.en_bullet_img = pygame.image.load(CO.EN_BULLET_01)
 
+        if en_type == '2':
+            self.image = pygame.image.load(CO.EN2_01_IMGPATH)
+            self.health = 20
+            self.bullet_img = CO.EN_BULLET_01
+            self.en_bullets = pygame.sprite.Group()
+            self.en_bullet_img = pygame.image.load(CO.EN_BULLET_01)
+
         self.rect = self.image.get_rect()
         self.change = 0
         self.boom_change = 0
@@ -49,6 +56,39 @@ class Enemys(Sprite):
 
         elif self.change == 3:
             self.image = pygame.image.load(CO.EN1_04_IMGPATH)
+            self.change = 4
+
+        elif self.change == 4:
+            self.image = pygame.image.load(CO.EN1_05_IMGPATH)
+            self.change = 5
+
+        elif self.change == 5:
+            self.image = pygame.image.load(CO.EN1_06_IMGPATH)
+            self.change = 6
+
+        elif self.change == 6:
+            self.image = pygame.image.load(CO.EN1_07_IMGPATH)
+            self.change = 7
+
+        elif self.change == 7:
+            self.image = pygame.image.load(CO.EN1_01_IMGPATH)
+            self.change = 0
+
+    def change_en2(self):  # 控制角色动画
+        if self.change == 0:
+            self.image = pygame.image.load(CO.EN2_01_IMGPATH)
+            self.change = 1
+
+        elif self.change == 1:
+            self.image = pygame.image.load(CO.EN2_02_IMGPATH)
+            self.change = 2
+
+        elif self.change == 2:
+            self.image = pygame.image.load(CO.EN2_03_IMGPATH)
+            self.change = 3
+
+        elif self.change == 3:
+            self.image = pygame.image.load(CO.EN2_04_IMGPATH)
             self.change = 0
 
     def get_en_pos(self):  # 获得怪物的位置
@@ -59,7 +99,7 @@ class Enemys(Sprite):
     def en_shoot(self):
         self.temp += 1
         if self.temp % 30 == 0:
-            print(self.rect)
+            # print(self.rect)
             bullet = Bullet(self.en_bullet_img, (self.rect.top,self.rect.left))
             # 将子弹添加到子弹组中
             self.en_bullets.add(bullet)
