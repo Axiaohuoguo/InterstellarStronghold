@@ -1,7 +1,8 @@
+
 import pygame
 from moviepy.editor import *
 import source.setup
-from source.constants import SCR_X ,SCR_Y,ST_SOUND,EN1_01_IMGPATH,EN1_02_IMGPATH,EN1_03_IMGPATH,EN1_04_IMGPATH
+from source.constants import SCR_X ,SCR_Y,EN1_01_IMGPATH
 
 
 # stage = 0  # 游戏阶段
@@ -195,7 +196,7 @@ def play_video(path,size):
     :param size:  w，h大小
     :return:
     '''
-    clip = VideoFileClip(path,)
+    clip = VideoFileClip(path)
     clip.reader.size=size
     clip.preview()
 
