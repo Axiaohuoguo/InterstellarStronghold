@@ -14,10 +14,11 @@ class PlayerCO(Sprite):
         if pltype == '1':
             self.image = pygame.image.load(CO.PLAYER_0_1)  # 角色图片
             self.health = 100
-            self.health_img = pygame.image.load(CO.HEALTH_p1_01) #血量
+            self.health_img = pygame.image.load(CO.HEALTH_p1_10) #血量
             self.health_img_rect = self.health_img.get_rect()
             self.score1 = 0
             self.bullet_img = pygame.image.load(CO.BULLET_01)  # 子弹图片
+            self.sound = pygame.mixer.Sound(CO.BU_SOU_01)  # 音效
 
         self.rect = self.image.get_rect()
         self.speed = 20
@@ -40,6 +41,26 @@ class PlayerCO(Sprite):
     #绘制玩家血量
     def draw_p1_health(self,Surface):
         # 加载玩家血量图图片
+        if self.health >= 100:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_10)
+        elif 90 <= self.health < 100:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_09)
+        elif 80 <= self.health < 90:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_08)
+        elif 70 <= self.health < 80:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_07)
+        elif 60 <= self.health < 70:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_06)
+        elif 50 <= self.health < 60:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_05)
+        elif 40 <= self.health < 50:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_04)
+        elif 30 <= self.health < 40:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_03)
+        elif 20 <= self.health < 30:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_02)
+        elif 10 <= self.health < 20:
+            self.health_img = pygame.image.load(CO.HEALTH_p1_01)
         Surface.blit(self.health_img, (0, 0), self.health_img_rect)  # 图像，绘制的位置，绘制的截面框
         pass
 
@@ -100,12 +121,17 @@ class PlayerCO(Sprite):
     def shoot(self):
         self.bu_st_tim +=1
         if self.bu_st == 0:
+
             if self.bu_st_tim % 5 ==0:
+                self.sound.play()
                 bullet = Bullet(self.bullet_img, (self.rect.topleft[0],self.rect.topleft[1]+30))
                 self.bullets.add(bullet)
         if self.bu_st == 1:
+            self.sound.play()
             bullet = Bullet(self.bullet_img, (self.rect.topleft[0], self.rect.topleft[1] + 30))
             self.bullets.add(bullet)
+
+
 
 
 # 子弹

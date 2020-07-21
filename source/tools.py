@@ -2,7 +2,7 @@
 import pygame
 from moviepy.editor import *
 import source.setup
-from source.constants import SCR_X ,SCR_Y,EN1_01_IMGPATH,OPEN_DOOR
+from source.constants import SCR_X ,SCR_Y,EN1_01_IMGPATH,OPEN_DOOR,OPEN_BULL,MU_ST_1
 
 
 # stage = 0  # 游戏阶段
@@ -16,15 +16,18 @@ class Game:
         self.isEng = 0
         self.vPath = None
 
-    def run(self, state_0, state_1, player_1, en1s,en2s, en_boos, en_boom):
+    def run(self, state_0, state_1, player_1, en1s,en2s, en_boos, en_boom ,ends):
         pygame.key.set_repeat(60)  # 响应一直按下的键
         keep_going = True
+        pygame.mixer.init()
+        mu = pygame.mixer.music
+        pygame.mixer.music.load(MU_ST_1)
+        mu.play(-1)
         while keep_going:
             print("========玩家坐标",player_1.rect.topleft)
             pos = pygame.mouse.get_pos()
             mouse_x = pos[0]
             mouse_y = pos[1]
-
             KEY_ESCAPE = pygame.key.get_pressed()[pygame.K_ESCAPE]
             KEY_A = pygame.key.get_pressed()[pygame.K_a]
             KEY_D = pygame.key.get_pressed()[pygame.K_d]
@@ -96,16 +99,18 @@ class Game:
                     if self.stage == 0:  # 阶段0
                         if (SCR_X // 2 - 554 // 2 <= mouse_x <= SCR_X // 2 + 554 // 2) and \
                                 (SCR_Y // 2 <= mouse_y <= SCR_Y // 2 + 94):  # 判断鼠标是否在开始按钮之上
+                            play_video(OPEN_DOOR,(SCR_X,SCR_Y))
                             self.stage = 1
-
-
 
             if self.stage == 0:  # 阶段 0 主菜单
                 state_0.update(self.screen,pos)
 
             if self.stage == 1:  # 阶段 1 第一关
+                if player_1.score1 >= 50:
+                    player_1.bu_st = 1
                 print("地图==：",state_1.lv_x_speed)
-
+                if player_1.health <= 0 or (self.isEng != 0):
+                    self.stage = 99
                 state_1.map_loade(self.screen)  # 加载地图
                 state_1.map_check()  # 检测地图
                 player_1.player_load(self.screen)  # 加载玩家
@@ -197,9 +202,8 @@ class Game:
                             en_bu.kill()
 
             if self.stage == 99:  # 阶段 99 游戏结束
-                state_0.update(self.screen, pos)
+                ends.update(self.screen)
                 player_1.draw_score(self.screen)
-
 
             pygame.display.update()
             self.clock.tick(60)  # 60帧
@@ -225,7 +229,7 @@ def get_image(img, x, y, width, height, cloorkey, scale):
     return images
 
 
-def play_video(path,size):
+def play_video(path,size,pos = lambda t: (0, 0)):
     '''
     :param path:  路径
     :param size:  w，h大小
@@ -233,7 +237,7 @@ def play_video(path,size):
     '''
 
     clip = VideoFileClip(path)
-    clip.pos = (0,0)
+    clip.pos = pos
     clip.size=size
     clip.fps =60
     clip.mask = False
@@ -242,6 +246,5 @@ def play_video(path,size):
 
 def close_video(clip):
     clip.close()
-
 
 

@@ -15,12 +15,14 @@ class MainMenu:
         self.st_rect_y = 0
         self.sound = pygame.mixer.Sound(CO.ST_SOUND)  # 音效
 
+
     def update(self,surface,pos):
         '''
         :param surface: 屏幕
         :param pos: 鼠标位置
         :return:
         '''
+
         # print(backgroundimg.get_rect())
         # 加载背景图片\
 
