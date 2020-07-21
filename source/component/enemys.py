@@ -27,6 +27,13 @@ class Enemys(Sprite):
             self.en_bullets = pygame.sprite.Group()
             self.en_bullet_img = pygame.image.load(CO.EN_BULLET_01)
 
+        if en_type == '3':
+            self.image = pygame.image.load(CO.EN_BOOS1_IMGPATH)
+            self.health = 500
+            self.bullet_img = CO.EN_BULLET_01
+            self.en_bullets = pygame.sprite.Group()
+            self.en_bullet_img = pygame.image.load(CO.EN_BULLET_01)
+
         self.rect = self.image.get_rect()
         self.change = 0
         self.boom_change = 0
@@ -91,18 +98,54 @@ class Enemys(Sprite):
             self.image = pygame.image.load(CO.EN2_04_IMGPATH)
             self.change = 0
 
+    def change_enboos(self):  # 控制角色动画
+        if self.change == 0:
+            self.image = pygame.image.load(CO.EN_BOOS1_IMGPATH)
+            self.change = 1
+
+        elif self.change == 1:
+            self.image = pygame.image.load(CO.EN_BOOS2_IMGPATH)
+            self.change = 2
+
+        elif self.change == 2:
+            self.image = pygame.image.load(CO.EN_BOOS3_IMGPATH)
+            self.change = 3
+
+        elif self.change == 3:
+            self.image = pygame.image.load(CO.EN_BOOS4_IMGPATH)
+            self.change = 4
+
+        elif self.change == 4:
+            self.image = pygame.image.load(CO.EN_BOOS5_IMGPATH)
+            self.change = 5
+
+        elif self.change == 5:
+            self.image = pygame.image.load(CO.EN_BOOS6_IMGPATH)
+            self.change = 6
+
+        elif self.change == 6:
+            self.image = pygame.image.load(CO.EN_BOOS1_IMGPATH)
+            self.change = 0
+
     def get_en_pos(self):  # 获得怪物的位置
-        pos = self.rect.topleft
+        pos = self.rect.center
         return pos
 
     # 发射子弹方法
     def en_shoot(self):
         self.temp += 1
-        if self.temp % 30 == 0:
-            # print(self.rect)
-            bullet = Bullet(self.en_bullet_img, (self.rect.top,self.rect.left))
-            # 将子弹添加到子弹组中
-            self.en_bullets.add(bullet)
+        if self.en_type =='3':
+            if self.temp % 5 == 0:
+                bullet = Bullet(self.en_bullet_img, (self.rect.top, self.rect.left))
+                # 将子弹添加到子弹组中
+                self.en_bullets.add(bullet)
+        else:
+            if self.temp % 30 == 0:
+                bullet = Bullet(self.en_bullet_img, (self.rect.top,self.rect.left))
+                # 将子弹添加到子弹组中
+                self.en_bullets.add(bullet)
+    def myKill(self):
+        self.kill()
 
 
 # 子弹

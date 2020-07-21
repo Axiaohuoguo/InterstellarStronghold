@@ -9,6 +9,7 @@ class PlayerCO(Sprite):
 
     def __init__(self,pltype):
         Sprite.__init__(self)
+        self.bu_st = 0
         self.pltype = pltype
         if pltype == '1':
             self.image = pygame.image.load(CO.PLAYER_0_1)  # 角色图片
@@ -29,6 +30,7 @@ class PlayerCO(Sprite):
 
         self.change = 0  # 角色动画控制
         self.bullets = pygame.sprite.Group()  # bullets属性：子弹组，使用精灵组
+        self.bu_st_tim = 0
         self.clock = pygame.time.Clock()
 
     def player_load(self, Surface):
@@ -58,7 +60,7 @@ class PlayerCO(Sprite):
         self.rect.top += self.speed
 
     def pl_uodate_r(self):  # 角色右移动
-        self.rect.right += 0
+        self.rect.right += 10
 
     def pl_uodate_l(self):  # 角色左移
         self.rect.right -= 0
@@ -96,10 +98,14 @@ class PlayerCO(Sprite):
 
     # 发射子弹方法
     def shoot(self):
-        # print(self.rect)
-        bullet = Bullet(self.bullet_img, (self.rect.topleft))
-        # 将子弹添加到子弹组中
-        self.bullets.add(bullet)
+        self.bu_st_tim +=1
+        if self.bu_st == 0:
+            if self.bu_st_tim % 5 ==0:
+                bullet = Bullet(self.bullet_img, (self.rect.topleft[0],self.rect.topleft[1]+30))
+                self.bullets.add(bullet)
+        if self.bu_st == 1:
+            bullet = Bullet(self.bullet_img, (self.rect.topleft[0], self.rect.topleft[1] + 30))
+            self.bullets.add(bullet)
 
 
 # 子弹

@@ -28,20 +28,26 @@ EN1_05_IMGPATH = 'res/picture/Enemy/enemy1_05.png'  # 怪物1图片
 EN1_06_IMGPATH = 'res/picture/Enemy/enemy1_06.png'  # 怪物1图片
 EN1_07_IMGPATH = 'res/picture/Enemy/enemy1_07.png'  # 怪物1图片
 
-EN2_01_IMGPATH = 'res/picture/Enemy/enemy2_01.png'  # 怪物1图片
-EN2_02_IMGPATH = 'res/picture/Enemy/enemy2_02.png'  # 怪物1图片
-EN2_03_IMGPATH = 'res/picture/Enemy/enemy2_03.png'  # 怪物1图片
-EN2_04_IMGPATH = 'res/picture/Enemy/enemy2_04.png'  # 怪物1图片
+EN2_01_IMGPATH = 'res/picture/Enemy/enemy2_01.png'  # 怪物2图片
+EN2_02_IMGPATH = 'res/picture/Enemy/enemy2_02.png'  # 怪物2图片
+EN2_03_IMGPATH = 'res/picture/Enemy/enemy2_03.png'  # 怪物2图片
+EN2_04_IMGPATH = 'res/picture/Enemy/enemy2_04.png'  # 怪物2图片
 
-# BOOM_01 = 'res/picture/Enemy/boom01.png'  # 爆炸效果
-# BOOM_02 = 'res/picture/Enemy/boom02.png'  # 怪物1图片
-# BOOM_03 = 'res/picture/Enemy/boom03.png'  # 怪物1图片
+
+EN_BOOS1_IMGPATH = 'res/picture/Enemy/En_boos (1).png'
+EN_BOOS2_IMGPATH = 'res/picture/Enemy/En_boos (2).png'
+EN_BOOS3_IMGPATH = 'res/picture/Enemy/En_boos (3).png'
+EN_BOOS4_IMGPATH = 'res/picture/Enemy/En_boos (4).png'
+EN_BOOS5_IMGPATH = 'res/picture/Enemy/En_boos (5).png'
+EN_BOOS6_IMGPATH = 'res/picture/Enemy/En_boos (6).png'
+
 
 EN1_BOOM_PATH = 'res/picture/Enemy/en_boom'
 
 EN1_JSONPATH = 'source/data/maps/level_01.json'  # 怪物
-
 EN1_TXTPATH = 'source/data/maps/level_01'  # 怪物
+
+OPEN_DOOR ='res/video/Door-Open.mp4'
 FONT_COL = (255,0,255) # 分数字体颜色
 FONT_S = 'res/font/myfont.ttf' # 字体
 

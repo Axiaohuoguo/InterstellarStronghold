@@ -6,6 +6,10 @@ from source.component import player,enemys
 import json
 import pygame.sprite as sprite
 
+'''
+偏移 600
+max map 7680
+'''
 
 def play_video():
     tools.play_video(ST_VIDEOPATH, SRC_SIZE)
@@ -27,18 +31,19 @@ def main():
     for i in data['enemy_02']:
         print(i)
         en2s.add(enemys.Enemys(i["X"], i["Y"],'2'))
-
+    en_boos = enemys.Enemys(int(data["boos"][0]["X"]),int(data["boos"][0]["Y"]),"3") # boos
+    file.close()
     en_boom = enemys.Bomb()
-    game.run(states_0,states_1,p1,en1s,en2s,en_boom)
+    game.run(states_0,states_1,p1,en1s,en2s,en_boos,en_boom)
 
 
 if __name__ == '__main__':
-    try:
-        if callable(play_video()):
-            play_video()
-        main()
-    except:
-        print("ex")
-    else:
-        print("==")
+    # try:
+    if callable(play_video()):
+        play_video()
+    main()
+    # except:
+    #     print("ex")
+    # else:
+    #     print("==")
 
