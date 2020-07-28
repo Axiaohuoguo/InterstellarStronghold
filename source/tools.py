@@ -1,6 +1,6 @@
 
 import pygame
-from moviepy.editor import *
+
 import source.setup
 from source.constants import SCR_X ,SCR_Y,EN1_01_IMGPATH,OPEN_DOOR,OPEN_BULL,MU_ST_1
 
@@ -15,6 +15,7 @@ class Game:
         self.tim = 0
         self.isEng = 0
         self.vPath = None
+        self.temp = 0
 
     def run(self, state_0, state_1, player_1, en1s,en2s, en_boos, en_boom ,ends):
         pygame.key.set_repeat(60)  # 响应一直按下的键
@@ -100,6 +101,10 @@ class Game:
                         if (SCR_X // 2 - 554 // 2 <= mouse_x <= SCR_X // 2 + 554 // 2) and \
                                 (SCR_Y // 2 <= mouse_y <= SCR_Y // 2 + 94):  # 判断鼠标是否在开始按钮之上
                             play_video(OPEN_DOOR,(SCR_X,SCR_Y))
+
+                            pygame.mixer.music.load(MU_ST_1)
+                            mu.play(-1)
+
                             self.stage = 1
 
             if self.stage == 0:  # 阶段 0 主菜单
@@ -147,6 +152,14 @@ class Game:
                 en2s.update()
                 player_1.update()
                 print("血量 ===",player_1.health)
+                # 玩家和boos，boos子弹碰撞
+                if pygame.sprite.collide_rect(player_1,en_boos):
+                    player_1.health -= 50
+                for boos_bu in en_boos.en_bullets :
+                    if pygame.sprite.collide_rect(boos_bu,player_1):
+                        player_1.health -= 20
+                        boos_bu.kill()
+
                 # 玩家子弹和敌人1碰撞
                 self.tim += 1
                 for en in en1s:
@@ -202,6 +215,7 @@ class Game:
                             en_bu.kill()
 
             if self.stage == 99:  # 阶段 99 游戏结束
+                mu.stop()
                 ends.update(self.screen)
                 player_1.draw_score(self.screen)
 
@@ -209,7 +223,7 @@ class Game:
             self.clock.tick(60)  # 60帧
         pygame.quit()
 
-        
+
 def get_image(img, x, y, width, height, cloorkey, scale):
     '''
     :param img: 图片
@@ -229,7 +243,10 @@ def get_image(img, x, y, width, height, cloorkey, scale):
     return images
 
 
+from moviepy.editor import *
+
 def play_video(path,size,pos = lambda t: (0, 0)):
+
     '''
     :param path:  路径
     :param size:  w，h大小

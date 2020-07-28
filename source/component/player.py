@@ -9,7 +9,7 @@ class PlayerCO(Sprite):
 
     def __init__(self,pltype):
         Sprite.__init__(self)
-        self.bu_st = 0
+        self.bu_st = 0  # 当前子弹状态
         self.pltype = pltype
         if pltype == '1':
             self.image = pygame.image.load(CO.PLAYER_0_1)  # 角色图片
@@ -121,15 +121,16 @@ class PlayerCO(Sprite):
     def shoot(self):
         self.bu_st_tim +=1
         if self.bu_st == 0:
-
             if self.bu_st_tim % 5 ==0:
-                self.sound.play()
+
                 bullet = Bullet(self.bullet_img, (self.rect.topleft[0],self.rect.topleft[1]+30))
                 self.bullets.add(bullet)
+                self.sound.play()
         if self.bu_st == 1:
-            self.sound.play()
+
             bullet = Bullet(self.bullet_img, (self.rect.topleft[0], self.rect.topleft[1] + 30))
             self.bullets.add(bullet)
+            self.sound.play()
 
 
 

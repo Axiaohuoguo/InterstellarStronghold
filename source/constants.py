@@ -53,6 +53,8 @@ EN_BOOS4_IMGPATH = 'res/picture/Enemy/En_boos (4).png'
 EN_BOOS5_IMGPATH = 'res/picture/Enemy/En_boos (5).png'
 EN_BOOS6_IMGPATH = 'res/picture/Enemy/En_boos (6).png'
 
+BOOS_BULL_01=''
+
 
 EN1_BOOM_PATH = 'res/picture/Enemy/en_boom'
 

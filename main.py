@@ -40,9 +40,9 @@ def main():
     game.run(states_0,states_1,p1,en1s,en2s,en_boos,en_boom,ends)
 
 if __name__ == '__main__':
-    # try:
-    if callable(play_video()):
-        play_video()
+    # # try:
+    # if callable(play_video()):
+    #     play_video()
     main()
     # except:
     #     print("ex")
