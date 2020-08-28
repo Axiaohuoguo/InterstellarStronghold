@@ -1,2 +1,3 @@
 # InterstellarStronghold
 InterstellarStronghold-星际要塞
+基于pygame的小游戏示例适合初学者，代码很垃圾参考即可
